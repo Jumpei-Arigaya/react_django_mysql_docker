@@ -22,3 +22,14 @@ services:
       db:
         condition: service_healthy
     command: python3 manage.py runserver 0.0.0.0:8000
+
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile_react
+    restart: always
+    volumes:
+      - ./node:/usr/src/app:cached
+    command: sh -c "cd django_front && yarn start"
+    ports:
+      - "3000:3000"
